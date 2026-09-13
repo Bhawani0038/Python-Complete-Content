@@ -1,0 +1,6 @@
+print("Python".isalpha())
+print("12345".isdigit())
+print("Python123".isalnum())
+print("   ".isspace())
+print("python".islower())
+print("PYTHON".isupper())
