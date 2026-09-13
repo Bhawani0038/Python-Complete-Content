@@ -1,0 +1,3 @@
+# Write a program that determines a person's BMI (Body Mass Index) category based on their weight and height. Ask the user to enter their weight in kilograms and their height in meters. Calculate their BMI using the formula: BMI = weight / (height * height). Display a message indicating their BMI category based on the following ranges: "Underweight" for BMI less than 18.5, "Normal weight" for BMI between 18.5 and 24.9, "Overweight" for BMI between 25 and 29.9, and "Obese" for BMI greater than or equal to 30.
+
+# solution here

@@ -1,0 +1,3 @@
+# Write a program that assists a customer in selecting a suitable mobile phone plan. Ask the user to enter the number of minutes they anticipate using per month and display the plan options: "Basic," "Standard," and "Premium." If the user enters less than 200 minutes, recommend the "Basic" plan. For 200-500 minutes, recommend the "Standard" plan. For more than 500 minutes, recommend the "Premium" plan.
+
+# solution here

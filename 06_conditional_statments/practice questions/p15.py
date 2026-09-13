@@ -1,0 +1,3 @@
+# Write a program that helps a user choose the right clothing for the weather. Ask the user to enter the current temperature in Celsius. Based on the temperature, provide suggestions for clothing: if the temperature is below 10 degrees, suggest "Winter jacket, hat, and gloves"; if it is between 10 and 20 degrees, suggest "Sweater or light jacket"; if it is above 20 degrees, suggest "T-shirt and shorts."
+
+# solution here

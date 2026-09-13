@@ -1,0 +1,3 @@
+# Write a program that determines the eligibility of a person to apply for a driver's license based on their age and the type of license. Ask the user to enter their age and the type of license they are applying for: "Car" or "Motorcycle." If the age is 18 or above for a car license or 16 or above for a motorcycle license, print "Eligible to apply for a [license type] license"; otherwise, print "Not eligible to apply for a [license type] license."
+
+# solution here
