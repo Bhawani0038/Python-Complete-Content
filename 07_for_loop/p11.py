@@ -1,3 +1,8 @@
 student = {"name": "Mina", "age": 20, "course": "Python"}
-for key, value in student.items():
-	print(f"{key}: {value}")
+
+print(student.items())
+# for key, value in student.items():
+# 	print(f"{key}: {value}")
+
+for name, age in student.items():
+    print(name, age)

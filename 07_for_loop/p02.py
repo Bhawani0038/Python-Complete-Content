@@ -1,4 +1,2 @@
-names = ["Asha", "Bilal", "Chen"]
-
-for name in names:
-	print(f"Hello, {name}!")
+for number in range(5):
+	print(number)
