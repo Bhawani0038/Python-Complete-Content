@@ -1,0 +1,16 @@
+[
+    {
+        "name": "aman",
+        "email": "aman@gmail.com",
+        "acc_no": "100",
+        "balance": 0,
+        "password": "1234"
+    },
+    {
+        "name": "bhawani",
+        "email": "bhawani@gmail.com",
+        "acc_no": "bob364",
+        "balance": 0,
+        "password": "234567"
+    }
+]
