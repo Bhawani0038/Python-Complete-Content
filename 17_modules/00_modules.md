@@ -216,7 +216,8 @@ project/
         __init__.py
         math_tools.py
         user_tools.py
-        main.py
+    
+    main.py
 ```
 
 ### Example: `math_tools.py`
