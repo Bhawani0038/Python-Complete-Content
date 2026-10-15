@@ -1,0 +1,6 @@
+,Sale_ID,Product,Quantity,Sales_Amount,Region
+0,S001,Laptop,2,80000,North
+1,S002,Mouse,5,2500,South
+2,S003,Keyboard,3,,NA
+3,S004,Monitor,1,,West
+4,S005,Headphones,4,-,N/A
