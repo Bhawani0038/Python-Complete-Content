@@ -158,7 +158,7 @@ You can use:
 ```python
 print(
     df.loc[
-        ("North", ["Laptop", "Mobile"])
+        ("North", ["Laptop", "Mobile"]), :
     ]
 )
 ```
@@ -169,7 +169,7 @@ For more complex MultiIndex selection, `pd.IndexSlice` is useful:
 idx = pd.IndexSlice
 
 result = df.loc[
-    idx["North", ["Laptop", "Mobile"]]
+    idx["North", ["Laptop", "Mobile"]], :
 ]
 
 print(result)
