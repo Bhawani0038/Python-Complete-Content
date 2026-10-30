@@ -1,2 +1,0 @@
-student = dict(name="Aisha", age=20, course="Python")
-print(student)
