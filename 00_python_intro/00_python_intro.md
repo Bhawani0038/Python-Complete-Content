@@ -12,14 +12,10 @@ Python is a high-level, beginner-friendly programming language known for its sim
 
 ## History of Python
 
-Python was created by Guido van Rossum and first released in 1991. The language was designed to emphasize code readability and simplicity, which is why it is often chosen for teaching programming.
-
+Python was created by Guido van Rossum and first released in 1991.
 ## Features of Python
 
 - Simple and clean syntax
-- Interpreted language
-- Dynamically typed
-- Object-oriented and functional programming support
 - Rich standard library
 - Strong support for third-party packages
 

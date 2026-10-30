@@ -1,7 +1,8 @@
-prices = [120, 340, 560, 290]
+meals = [400, 600, 300, 500]
 
-for p in prices:
-    if p > 300:
-        print("high")
-    else:
-        print("low")
+total_calories = 0
+
+for m in meals:
+    total_calories = total_calories + m
+
+print(total_calories)

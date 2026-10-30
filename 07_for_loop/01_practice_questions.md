@@ -63,120 +63,8 @@ Correct Answer: b) a b c d
 
 ●	So loop prints original characters: 'a', 'b', 'c', 'd'.
 
- 
-## 4. Write a program to print the following patterns:
-i)
-```
-*
-**
-***
-****
-*****
-```
 
-ii)
-```
-*****
-****
-***
-**
-*
-```
-
-iii)
-```
-1
-12
-123
-1234
-12345
-```
-
-iv)
-```
-1
-23
-456
-78910
-```
-
-v)
-```
-1
-22
-333
-4444
-55555
-```
-
-vi)
-```
-    *
-   ***
-  *****
- *******
-*********
-```
-
-vii)
-```
-*******
- *****
-  ***
-   *
-```
-
-viii)
-```
-    *
-   ***
-  *****
- *******
-*********
- *******
-  *****
-   ***
-    *
-```
-
-ix)
-```
-a
-bc
-def
-ghij
-```
-
-
-x)
-```
-a
-bb
-ccc
-dddd
-eeeee
-```
-
-xi)
-```
-*****
-*****
-*****
-*****
-*****
-```
-
-xii)
-```
-******
-*    *
-*    *
-*    *
-*    *
-******
-```
-
-## 5. You are given a list of product prices. Write a for loop that prints "High" if the price is more than ₹300, otherwise print "Low".
+## 4. You are given a list of product prices. Write a for loop that prints "High" if the price is more than ₹300, otherwise print "Low".
 prices = [120, 340, 560, 290]
 ```
     Expected output:
@@ -186,23 +74,23 @@ prices = [120, 340, 560, 290]
     Low
 ```
 
-## 6. You had multiple meals today. Each meal had a certain number of calories. Write a program using a for loop to calculate and print the total calories consumed.
+## 5. You had multiple meals today. Each meal had a certain number of calories. Write a program using a for loop to calculate and print the total calories consumed.
 ```
 meals = [400, 600, 300, 500]
 Expected Output: Total calories consumed = 1800
 ```
 
-## 7. Using a for loop and range(), print all even-numbered buses in the range 101 to 120 (inclusive).
+## 6. Using a for loop and range(), print all even-numbered buses in the range 101 to 120 (inclusive).
 ```
 Expected Output: 102 104 106 108 110 112 114 116 118 120
 ```
 
-## 8. Write a for loop to count how many vowels (a, e, i, o, u) are present in the given sentence.
+## 7. Write a for loop to count how many vowels (a, e, i, o, u) are present in the given sentence.
 ```
 sentence = "My car broke down near the railway station."
 # Expected Output: Total vowels = 14
 ```
-## 9. You are given a dictionary of fruit prices. Use a for loop to print each fruit and its price in the format: fruit -> ₹price.
+## 8. You are given a dictionary of fruit prices. Use a for loop to print each fruit and its price in the format: fruit -> ₹price.
 ```
 fruit_prices = {'apple': 100, 'banana': 50, 'grapes': 60}
 # Expected Output:
@@ -211,7 +99,7 @@ fruit_prices = {'apple': 100, 'banana': 50, 'grapes': 60}
 # grapes -> ₹60
 ```
  
-## 10. Use a for loop to display the multiplication table of 5 up to 10.
+## 9. Use a for loop to display the multiplication table of 5 up to 10.
 
 ```
 Expected Output:

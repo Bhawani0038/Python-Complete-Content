@@ -308,8 +308,3 @@ print(sum(prices))
 - Use nested loops for repeated rows and columns.
 - Indentation defines the body of the loop.
 
-## Practice Exercises
-
-
-name | age | salary
-20 | 30 |40

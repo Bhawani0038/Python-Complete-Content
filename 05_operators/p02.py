@@ -1,6 +1,0 @@
-print(5 == 5)
-print(5 != 3)
-print(8 > 4)
-print(2 < 6)
-print(7 >= 7)
-print(3 <= 5)

@@ -159,10 +159,6 @@ Alice
 Bob
 ```
 
-## Summary
-
-Variables are used to store data in Python. They make programs flexible and easier to work with. You can assign values, change them, and use them throughout your code.
-
 ## Practice Questions
 
 1. Create a variable called `fruit` and assign it a value.

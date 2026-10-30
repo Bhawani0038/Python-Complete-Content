@@ -191,16 +191,6 @@ if x > 0:
 print("This is outside the if block")
 ```
 
-## Summary
-
-Conditional statements help a program make decisions. The main keywords are:
-
-- `if`
-- `else`
-- `elif`
-
-They allow code to run differently depending on conditions.
-
 ## Practice Exercise
 
 1.	Write a program that checks if a given number is positive. If it is positive, print "Number is positive"; otherwise, print "Number is not positive."

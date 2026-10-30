@@ -238,34 +238,3 @@ Output:
 ```
 
 Because multiplication is done before addition.
-
-## Summary
-
-Python operators are symbols used to perform operations on values and variables. The main types are:
-
-- arithmetic operators
-- comparison operators
-- assignment operators
-- logical operators
-- identity operators
-- membership operators
-- bitwise operators
-
-Understanding operators is essential for writing effective Python programs.
-
-## Practice Exercise
-
-Try these examples:
-
-```python
-x = 15
-y = 4
-
-print(x + y)
-print(x > y)
-print(x % y)
-print(x == y)
-print(x >= 10 and y <= 5)
-```
-
-This will help you understand how operators work in real code.
