@@ -1,1120 +1,303 @@
-# NumPy Notes for Data Science & Data Analysis
+# NumPy
 
-## 1. What is NumPy?
+NumPy (Numerical Python) is the base library for fast numerical work in Python. Pandas, Scikit-learn and Matplotlib are all built on top of it.
 
-**NumPy (Numerical Python)** is a Python library used for:
-
-* Numerical calculations
-* Working with arrays
-* Mathematical/statistical operations
-* Fast operations on large datasets
-* Supporting libraries like **Pandas, Scikit-learn, Matplotlib**
+```text
+NumPy (arrays, calculations) → Pandas (analysis, cleaning) → Scikit-learn (ML)
+```
 
 ```python
 import numpy as np
 ```
 
----
-
-## 2. NumPy Array
-
-The main object in NumPy is the **ndarray**.
-
-```python
-arr = np.array([10, 20, 30, 40, 50])
-```
-
-Unlike a Python list, NumPy arrays are designed for **fast numerical operations**.
-
-### Important properties
-
-```python
-arr.ndim     # Number of dimensions
-arr.shape    # Size of each dimension
-arr.size     # Total number of elements
-arr.dtype    # Data type
-```
-
-Example:
-
-```python
-arr = np.array([10, 20, 30, 40, 50])
-
-print(arr.ndim)
-print(arr.shape)
-print(arr.size)
-print(arr.dtype)
-```
-
-Output:
-
-```text
-1
-(5,)
-5
-int64
-```
+**Roadmap:** Part A covers array basics. Part B uses those basics to build ML calculations (error metrics, scaling, activation functions). Part C is the practice set.
 
 ---
 
-# 3. 1D and 2D Arrays
+# Part A — Array Basics
 
-### 1D Array
+## 1. The ndarray
 
-```python
-arr = np.array([10, 20, 30, 40])
-```
-
-Shape:
-
-```text
-(4,)
-```
-
-### 2D Array
-
-Commonly used for **dataset-like numerical data**.
+The main NumPy object is the **ndarray**: a grid of values of one type, built for fast vectorized math (unlike a Python list).
 
 ```python
-arr = np.array([
-    [10, 20, 30],
-    [40, 50, 60]
-])
+arr = np.array([[10, 20, 30],
+                [40, 50, 60]])
+
+arr.ndim    # 2        -> number of dimensions
+arr.shape   # (2, 3)   -> 2 rows x 3 columns
+arr.size    # 6        -> total elements
+arr.dtype   # int64    -> data type
 ```
 
-Shape:
+A 1D array of 4 values has shape `(4,)`. A 2D array is the usual form for dataset-like data (rows = records, columns = features).
 
-```text
-(2, 3)
-```
-
-Meaning:
-
-```text
-2 rows × 3 columns
-```
-
----
-
-# 4. Creating Arrays
-
-### `arange()`
-
-Useful for generating numerical sequences.
+## 2. Creating Arrays
 
 ```python
-np.arange(1, 11)
+np.arange(1, 11)        # [1 2 ... 10]       (stop is excluded)
+np.arange(0, 10, 2)     # [0 2 4 6 8]        (with step)
+np.linspace(0, 100, 5)  # [0. 25. 50. 75. 100.]  (5 evenly spaced values, stop included)
 ```
 
-Output:
+Use `arange` when you know the **step**, and `linspace` when you know **how many points** you want (plotting, numerical analysis).
 
-```text
-[1 2 3 4 5 6 7 8 9 10]
-```
+## 3. Vectorized Operations
 
-With step:
-
-```python
-np.arange(0, 10, 2)
-```
-
-Output:
-
-```text
-[0 2 4 6 8]
-```
-
-### `linspace()`
-
-Creates evenly spaced values between two numbers.
-
-```python
-np.linspace(0, 100, 5)
-```
-
-Output:
-
-```text
-[  0.  25.  50.  75. 100.]
-```
-
-Useful in:
-
-* Data visualization
-* Numerical analysis
-* ML calculations
-
----
-
-# 5. Important Array Operations
-
-NumPy allows calculations on the **whole array at once**.
+Operations apply to the whole array at once, with no loop.
 
 ```python
 marks = np.array([50, 60, 70, 80])
-
-marks + 5
+marks + 5     # [55 65 75 85]
+marks * 2     # [100 120 140 160]
+marks / 2, marks - 10
 ```
 
-Output:
-
-```text
-[55 65 75 85]
-```
-
-Other operations:
-
-```python
-marks * 2
-marks / 2
-marks - 10
-```
-
-This is called **vectorized operation**.
-
----
-
-# 6. Statistical Functions
-
-These are especially important for **Data Science and Data Analysis**.
+## 4. Statistical Functions
 
 ```python
 data = np.array([10, 20, 30, 40, 50])
-```
 
-### Mean
-
-```python
-np.mean(data)
-```
-
-### Median
-
-```python
-np.median(data)
-```
-
-### Standard Deviation
-
-```python
-np.std(data)
-```
-
-### Variance
-
-```python
+np.mean(data)   
+np.median(data)   
+np.std(data)   
 np.var(data)
-```
-
-### Minimum
-
-```python
-np.min(data)
-```
-
-### Maximum
-
-```python
-np.max(data)
-```
-
-### Sum
-
-```python
-np.sum(data)
-```
-
-### Percentile
-
-```python
+np.min(data)    
+np.max(data)      
+np.sum(data)   
 np.percentile(data, 75)
 ```
 
-These functions are frequently used during **EDA and statistical analysis**.
+Note: `np.std` and `np.var` use the **population** formula by default (`ddof=0`). Pass `ddof=1` for the sample version.
 
----
+## 5. Axis (very important)
 
-# 7. Axis — Very Important for Data Analysis
-
-Consider:
+`axis` decides the direction a function works in.
 
 ```python
-data = np.array([
-    [10, 20, 30],
-    [40, 50, 60]
-])
+data = np.array([[10, 20, 30],
+                 [40, 50, 60]])
+
+np.mean(data, axis=0)   # [25. 35. 45.]  -> column-wise (collapses rows)
+np.mean(data, axis=1)   # [20. 50.]      -> row-wise (collapses columns)
 ```
 
-### Column-wise calculation
+| Axis | Collapses | Result is |
+| --- | --- | --- |
+| `axis=0` | rows | one value per column |
+| `axis=1` | columns | one value per row |
 
-```python
-np.mean(data, axis=0)
-```
-
-Output:
-
-```text
-[25. 35. 45.]
-```
-
-### Row-wise calculation
-
-```python
-np.mean(data, axis=1)
-```
-
-Output:
-
-```text
-[20. 50.]
-```
-
-Remember:
-
-| Axis     | Works Across | Common Meaning |
-| -------- | ------------ | -------------- |
-| `axis=0` | Rows         | Column-wise    |
-| `axis=1` | Columns      | Row-wise       |
-
----
-
-# 8. Indexing
+## 6. Indexing and Slicing
 
 ```python
 data = np.array([10, 20, 30, 40, 50])
+data[0]      # 10
+data[-1]     # 50
+data[1:4]    # [20 30 40]   (stop excluded)
 ```
+
+For 2D arrays use `[row, column]`:
 
 ```python
-data[0]
+data2d[:, 0]   # first column
+data2d[0, :]   # first row
 ```
 
-Output:
+## 7. Boolean Filtering
 
-```text
-10
-```
-
-```python
-data[-1]
-```
-
-Output:
-
-```text
-50
-```
-
----
-
-# 9. Slicing
-
-```python
-data[1:4]
-```
-
-Output:
-
-```text
-[20 30 40]
-```
-
-For 2D data:
-
-```python
-data[:, 0]
-```
-
-Selects the **first column**.
-
-```python
-data[0, :]
-```
-
-Selects the **first row**.
-
----
-
-# 10. Boolean Filtering
-
-Very useful in **data analysis**.
+A condition creates a True/False mask; the mask selects the matching values.
 
 ```python
 data = np.array([10, 25, 40, 15, 60])
+data[data > 30]                    # [40 60]
+data[(data > 20) & (data < 60)]    # [25 40]
 ```
 
-```python
-data[data > 30]
-```
+Use `&` (and), `|` (or), `~` (not), and wrap each condition in parentheses. Python's `and`/`or` will not work here.
 
-Output:
-
-```text
-[40 60]
-```
-
-Multiple conditions:
-
-```python
-data[(data > 20) & (data < 60)]
-```
-
-Output:
-
-```text
-[25 40]
-```
-
----
-
-# 11. Handling Missing Values
-
-NumPy represents missing numerical values using `NaN`.
+## 8. Missing Values (NaN)
 
 ```python
 data = np.array([10, 20, np.nan, 40])
+
+np.isnan(data)          # [False False True False]
+np.isnan(data).sum()    # 1  -> count of missing values
+np.nanmean(data)        # ignores NaN (also nanmedian, nansum, nanmax, nanmin)
 ```
 
-Check missing values:
+Plain `np.mean(data)` returns `nan` if any value is missing.
 
-```python
-np.isnan(data)
-```
-
-Output:
-
-```text
-[False False True False]
-```
-
-Count missing values:
-
-```python
-np.isnan(data).sum()
-```
-
-Output:
-
-```text
-1
-```
-
-Useful functions:
-
-```python
-np.nanmean(data)
-np.nanmedian(data)
-np.nansum(data)
-np.nanmax(data)
-np.nanmin(data)
-```
-
-These ignore `NaN` values.
-
----
-
-# 12. Reshaping
-
-Changing the structure without changing the data.
+## 9. Reshape and Flatten
 
 ```python
 data = np.array([1, 2, 3, 4, 5, 6])
+data.reshape(2, 3)      # [[1 2 3] [4 5 6]]
+data.reshape(-1, 2)     # -1 lets NumPy work out that dimension -> shape (3, 2)
+
+np.array([[1, 2], [3, 4]]).flatten()   # [1 2 3 4]
 ```
+
+Reshape never changes data, so the total number of elements must stay the same (6 → 2×3 or 3×2).
+
+## 10. Combining, Sorting, Unique
 
 ```python
-data.reshape(2, 3)
+np.concatenate([a, b])              # joins arrays; for 2D, axis=0 stacks rows, axis=1 joins columns
+
+np.sort(data)                       # sorted copy
+np.argsort(data)                    # indexes that would sort the array (useful for ranking)
+
+np.unique(data)                     # sorted unique values
+values, counts = np.unique(data, return_counts=True)   # frequency of each value
 ```
 
-Result:
+## 11. Random Numbers
 
-```text
-[[1 2 3]
- [4 5 6]]
-```
-
-Important:
-
-```python
-6 elements → 2 × 3
-```
-
-The total number of elements must remain the same.
-
----
-
-# 13. Flattening
-
-Convert multidimensional data into 1D.
-
-```python
-data.flatten()
-```
-
-Example:
-
-```text
-[[1 2]
- [3 4]]
-```
-
-becomes:
-
-```text
-[1 2 3 4]
-```
-
-Useful when converting matrix-like data into a single feature/vector.
-
----
-
-# 14. Combining Arrays
-
-### `concatenate()`
-
-```python
-a = np.array([1, 2])
-b = np.array([3, 4])
-
-np.concatenate([a, b])
-```
-
-Output:
-
-```text
-[1 2 3 4]
-```
-
-For 2D data, `axis` controls whether rows or columns are combined.
-
----
-
-# 15. Random Numbers
-
-Important for:
-
-* Sampling
-* Simulation
-* ML experimentation
-* Creating test datasets
+Used for sampling, simulation and test data. Set a seed to get repeatable results.
 
 ```python
 np.random.seed(42)
-
-data = np.random.randint(1, 101, 10)
+np.random.randint(1, 101, 10)     # 10 integers from 1 to 100
+np.random.rand(5)                 # 5 floats in [0, 1)
+np.random.normal(50, 10, 100)     # 100 values, mean 50, std 10
 ```
 
-Generate random floating-point values:
+## 12. Priority Guide
 
-```python
-np.random.rand(5)
-```
-
-Generate normally distributed values:
-
-```python
-np.random.normal(50, 10, 100)
-```
+| Importance | Topics |
+| --- | --- |
+| Very high | `ndarray`, `shape`, indexing, slicing, boolean filtering, vectorization, `axis`, `reshape`, statistical functions |
+| High | `ndim`, `dtype`, NaN handling, `concatenate`, `unique`, sorting, random numbers |
 
 ---
 
-# 16. Sorting
+# Part B — NumPy for ML Calculations
+
+These show how ML algorithms work internally. All the error metrics below share the same two arrays, defined once:
 
 ```python
-data = np.array([50, 20, 80, 10, 40])
-
-np.sort(data)
-```
-
-Output:
-
-```text
-[10 20 40 50 80]
-```
-
-Find indexes that would sort the array:
-
-```python
-np.argsort(data)
-```
-
-Useful when ranking or ordering numerical data.
-
----
-
-# 17. Unique Values
-
-Very useful for categorical/numerical analysis.
-
-```python
-data = np.array([10, 20, 10, 30, 20, 10])
-
-np.unique(data)
-```
-
-Output:
-
-```text
-[10 20 30]
-```
-
-Frequency:
-
-```python
-values, counts = np.unique(data, return_counts=True)
-```
-
----
-
-# 18. Important NumPy Concepts for Data Science
-
-Focus mainly on these:
-
-| Topic                 | Importance |
-| --------------------- | ---------- |
-| `ndarray`             | Very High  |
-| `shape`               | Very High  |
-| `ndim`                | High       |
-| `dtype`               | High       |
-| Indexing              | Very High  |
-| Slicing               | Very High  |
-| Boolean filtering     | Very High  |
-| Vectorization         | Very High  |
-| `axis`                | Very High  |
-| `reshape()`           | Very High  |
-| Statistical functions | Very High  |
-| `NaN` handling        | High       |
-| `concatenate()`       | High       |
-| `unique()`            | High       |
-| Sorting               | High       |
-| Random numbers        | High       |
-
-### NumPy → Pandas → Scikit-learn relationship
-
-```text
-NumPy
-  ↓
-Numerical Arrays & Calculations
-  ↓
-Pandas
-  ↓
-Data Analysis / Data Cleaning
-  ↓
-Scikit-learn
-  ↓
-Machine Learning
-```
-
-# NumPy Notes — ML Calculations & Functions
-
-These are the **NumPy concepts worth adding after basic arrays**, specifically because they are used to understand how Machine Learning algorithms work internally.
-
----
-
-## 1. Mean Absolute Error — MAE
-
-### Definition
-
-MAE measures the **average absolute difference** between actual and predicted values.
-
-### Formula
-
-$$
-MAE = \frac{1}{n}\sum_{i=1}^{n}|y_i-\hat{y}_i|
-$$
-
-Where:
-
-- **$y_i$** = Actual value
-- **$\hat{y}_i$** = Predicted value
-- **$n$** = Number of observations
-
-### NumPy Implementation
-
-```python
-import numpy as np
-
-actual = np.array([100, 200, 300, 400])
+actual    = np.array([100, 200, 300, 400])
 predicted = np.array([110, 190, 320, 380])
-
-mae = np.mean(np.abs(actual - predicted))
-
-print(mae)
+error = actual - predicted      # reused below
 ```
 
-### Key NumPy functions
+## 13. Regression Error Metrics
 
-```text
-np.abs()
-np.mean()
-```
+| Metric | Formula | NumPy |
+| --- | --- | --- |
+| **MAE** (average absolute error) | $\frac{1}{n}\sum \lvert y_i-\hat{y}_i\rvert$ | `np.mean(np.abs(error))` |
+| **MSE** (average squared error) | $\frac{1}{n}\sum (y_i-\hat{y}_i)^2$ | `np.mean(error ** 2)` |
+| **RMSE** | $\sqrt{MSE}$ | `np.sqrt(np.mean(error ** 2))` |
+| **Max error** | $\max\lvert y-\hat y\rvert$ | `np.max(np.abs(error))` |
 
-### Practice Question
+Where $y_i$ = actual value, $\hat{y}_i$ = predicted value, $n$ = number of observations.
 
-**Q1.** Given:
+- **MSE penalizes large errors more** because errors are squared.
+- **RMSE is in the same unit as the target.** If the target is in ₹, MSE is in ₹² but RMSE is in ₹, so it is easier to interpret.
+
+Reusable functions:
 
 ```python
-actual = np.array([50, 60, 70, 80, 90])
-predicted = np.array([55, 58, 72, 75, 95])
+def mae(a, p):  return np.mean(np.abs(a - p))
+def mse(a, p):  return np.mean((a - p) ** 2)
+def rmse(a, p): return np.sqrt(mse(a, p))
 ```
 
-Calculate MAE using only NumPy.
+## 14. R² Score
 
----
-
-# 2. Mean Squared Error — MSE
-
-### Definition
-
-MSE calculates the **average squared difference** between actual and predicted values.
-
-### Formula
+R² shows how much of the variation in the actual values the predictions explain (1 is perfect; 0 is no better than predicting the mean).
 
 $$
-MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2
+R^2 = 1-\frac{SS_{res}}{SS_{tot}},\quad SS_{res}=\sum(y-\hat y)^2,\quad SS_{tot}=\sum(y-\bar y)^2
 $$
-
-### NumPy Implementation
 
 ```python
-mse = np.mean((actual - predicted) ** 2)
-
-print(mse)
-```
-
-### Important
-
-MSE gives **more penalty to large errors** because the errors are squared.
-
-### Practice Question
-
-**Q2.** Using the same `actual` and `predicted` arrays, calculate MSE using NumPy.
-
----
-
-# 3. Root Mean Squared Error — RMSE
-
-### Definition
-
-RMSE is the square root of MSE.
-
-### Formula
-
-$$
-RMSE = \sqrt{MSE}
-$$
-
-### NumPy Implementation
-
-```python
-rmse = np.sqrt(np.mean((actual - predicted) ** 2))
-
-print(rmse)
-```
-
-### Why RMSE is useful?
-
-If the target is measured in:
-
-```text
-₹
-```
-
-then:
-
-```text
-MSE  → ₹²
-RMSE → ₹
-```
-
-So RMSE is easier to interpret because it is in the **same unit as the target**.
-
-### Practice Question
-
-**Q3.** Calculate RMSE for:
-
-```python
-actual = np.array([100, 120, 150, 180])
-predicted = np.array([110, 115, 145, 170])
-```
-
----
-
-# 4. Maximum Error
-
-Find the largest prediction error.
-
-### Formula
-
-$$
-Maximum\ Error = max(|y-\hat y|)
-$$
-
-### NumPy
-
-```python
-max_error = np.max(np.abs(actual - predicted))
-```
-
-### Practice Question
-
-**Q4.** Find the maximum prediction error for:
-
-```python
-actual = np.array([100, 200, 300, 400])
-predicted = np.array([105, 180, 330, 390])
-```
-
----
-
-# 5. R² Score Using NumPy
-
-R² measures how well predictions explain the variation in actual values.
-
-### Formula
-
-$$
-R^2 = 1-\frac{SS_{res}}{SS_{tot}}
-$$
-
-Where:
-
-$$
-SS_{res}=\sum(y-\hat y)^2
-$$
-
-$$
-SS_{tot}=\sum(y-\bar y)^2
-$$
-
-### NumPy Implementation
-
-```python
-actual = np.array([100, 200, 300, 400])
-predicted = np.array([110, 190, 310, 390])
-
 ss_res = np.sum((actual - predicted) ** 2)
 ss_tot = np.sum((actual - np.mean(actual)) ** 2)
-
-r2 = 1 - (ss_res / ss_tot)
-
-print(r2)
+r2 = 1 - ss_res / ss_tot
 ```
 
-### Practice Question
+## 15. Feature Scaling
 
-**Q5.** Calculate R² using NumPy for:
-
-```python
-actual = np.array([10, 20, 30, 40, 50])
-predicted = np.array([12, 18, 29, 43, 48])
-```
-
----
-
-# 6. Min-Max Normalisation
-
-Normalisation converts values into a fixed range, commonly **0 to 1**.
-
-### Formula
+**Min-Max normalisation** rescales values to the range 0–1:
 
 $$
 x' = \frac{x-x_{min}}{x_{max}-x_{min}}
 $$
 
-### NumPy Implementation
-
-```python
-data = np.array([10, 20, 30, 40, 50])
-
-normalized = (
-    (data - np.min(data)) /
-    (np.max(data) - np.min(data))
-)
-
-print(normalized)
-```
-
-Output:
-
-```text
-[0.   0.25 0.5  0.75 1.  ]
-```
-
-### Practice Question
-
-**Q6.** Normalize the following data between 0 and 1:
-
-```python
-data = np.array([25, 40, 60, 80, 100])
-```
-
----
-
-# 7. Standardisation — Z-Score
-
-Standardisation converts data so that approximately:
-
-```text
-Mean = 0
-Standard Deviation = 1
-```
-
-### Formula
+**Standardisation (z-score)** gives mean ≈ 0 and standard deviation ≈ 1 ($\mu$ = mean, $\sigma$ = standard deviation):
 
 $$
 z = \frac{x-\mu}{\sigma}
 $$
 
-Where:
-
-- **$x$** = Value
-- **$\mu$** = Mean
-- **$\sigma$** = Standard deviation
-
-### NumPy Implementation
-
 ```python
 data = np.array([10, 20, 30, 40, 50])
 
-standardized = (
-    (data - np.mean(data)) /
-    np.std(data)
-)
-
-print(standardized)
+normalized   = (data - data.min()) / (data.max() - data.min())   # [0. 0.25 0.5 0.75 1.]
+standardized = (data - data.mean()) / data.std()
 ```
 
-### Practice Question
+## 16. Activation Functions
 
-**Q7.** Standardise this data using NumPy:
+**Sigmoid** squashes any value into (0, 1). It is used in logistic regression and neural networks: large negative → near 0, `0` → 0.5, large positive → near 1.
 
-```python
-data = np.array([20, 25, 30, 35, 40])
-```
-
-Also verify that the resulting mean is approximately `0`.
-
----
-
-# 8. Creating a Sigmoid Function
-
-Sigmoid is widely used in **Logistic Regression** and neural networks.
-
-### Formula
+**ReLU** keeps positive values and turns negatives into 0. It is common in neural networks.
 
 $$
-\sigma(x)=\frac{1}{1+e^{-x}}
+\sigma(x)=\frac{1}{1+e^{-x}} \qquad ReLU(x)=\max(0,x)
 $$
 
-### NumPy Function
-
 ```python
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
+def sigmoid(x): return 1 / (1 + np.exp(-x))
+def relu(x):    return np.maximum(0, x)
+
+sigmoid(np.array([-2, -1, 0, 1, 2]))   # [0.119 0.269 0.5 0.731 0.881]
+relu(np.array([-3, -1, 0, 2, 5]))      # [0 0 0 2 5]
 ```
 
-Use it:
+`np.maximum` compares element by element. `np.max` returns a single largest value, so don't mix them up.
 
-```python
-x = np.array([-2, -1, 0, 1, 2])
+## 17. Classification: Accuracy and `np.where`
 
-print(sigmoid(x))
-```
-
-Approximate output:
-
-```text
-[0.119 0.269 0.5   0.731 0.881]
-```
-
-### Important observation
-
-```text
-x → -∞    sigmoid → 0
-x → 0     sigmoid → 0.5
-x → +∞    sigmoid → 1
-```
-
-### Practice Question
-
-**Q8.** Create a NumPy-based `sigmoid()` function and calculate sigmoid values for:
-
-```python
-x = np.array([-5, -2, 0, 2, 5])
-```
-
----
-
-# 9. Creating a ReLU Function
-
-ReLU is widely used in neural networks.
-
-### Formula
-
-$$
-ReLU(x)=max(0,x)
-$$
-
-### NumPy
-
-```python
-def relu(x):
-    return np.maximum(0, x)
-```
-
-Example:
-
-```python
-x = np.array([-3, -1, 0, 2, 5])
-
-print(relu(x))
-```
-
-Output:
-
-```text
-[0 0 0 2 5]
-```
-
-### Practice Question
-
-**Q9.** Create a `relu()` function using NumPy and apply it to:
-
-```python
-x = np.array([-10, -5, 2, 7, -3, 8])
-```
-
----
-
-# 10. Mean Squared Error as a Custom Function
-
-Instead of directly calculating MSE every time, create a reusable function.
-
-```python
-def mse(actual, predicted):
-    return np.mean((actual - predicted) ** 2)
-```
-
-Usage:
-
-```python
-actual = np.array([100, 200, 300])
-predicted = np.array([110, 190, 320])
-
-print(mse(actual, predicted))
-```
-
-### Practice Question
-
-**Q10.** Create your own NumPy functions for:
-
-```text
-MAE
-MSE
-RMSE
-```
-
-Then test all three using the same actual and predicted arrays.
-
----
-
-# 11. Binary Classification Accuracy Using NumPy
-
-Suppose:
-
-```python
-actual = np.array([1, 0, 1, 1, 0])
-predicted = np.array([1, 0, 0, 1, 1])
-```
-
-Compare predictions:
-
-```python
-actual == predicted
-```
-
-Output:
-
-```text
-[ True  True False  True False]
-```
-
-Calculate accuracy:
-
-```python
-accuracy = np.mean(actual == predicted)
-
-print(accuracy)
-```
-
-### Formula
+Comparing arrays gives a Boolean array. Its mean is the fraction of `True` values, which is exactly accuracy:
 
 $$
 Accuracy = \frac{Correct\ Predictions}{Total\ Predictions}
 $$
 
-### Practice Question
-
-**Q11.** Calculate classification accuracy using only NumPy:
-
 ```python
-actual = np.array([1, 1, 0, 1, 0, 0, 1, 0])
-predicted = np.array([1, 0, 0, 1, 1, 0, 1, 1])
+actual    = np.array([1, 0, 1, 1, 0])
+predicted = np.array([1, 0, 0, 1, 1])
+
+actual == predicted                 # [True True False True False]
+np.mean(actual == predicted)        # 0.6
 ```
 
----
-
-# 12. NumPy `where()` — Useful for ML
-
-`np.where()` can be used to convert probabilities into classes.
-
-Suppose Logistic Regression produces:
+`np.where(condition, value_if_true, value_if_false)` turns probabilities into classes using a threshold:
 
 ```python
 probabilities = np.array([0.2, 0.7, 0.4, 0.9, 0.6])
+np.where(probabilities >= 0.5, 1, 0)    # [0 1 0 1 1]
 ```
-
-Use `0.5` as the classification threshold:
-
-```python
-predicted = np.where(probabilities >= 0.5, 1, 0)
-```
-
-Output:
-
-```text
-[0 1 0 1 1]
-```
-
-This is the basic idea behind converting **predicted probability → predicted class**.
-
-### Practice Question
-
-**Q12.** Convert these probabilities into binary classes using threshold `0.5`:
-
-```python
-probabilities = np.array([0.1, 0.8, 0.45, 0.72, 0.3, 0.95])
-```
-
 
 ---
 
-# Recommended NumPy → ML Practice Set
+# Part C — Practice Set
 
+Use only NumPy.
 
-
-| No. | Question                      | Concept                 |
-| --: | ----------------------------- | ----------------------- |
-|   1 | Calculate MAE                 | `np.abs()`, `np.mean()` |
-|   2 | Calculate MSE                 | Squaring + mean         |
-|   3 | Calculate RMSE                | `np.sqrt()`             |
-|   4 | Find Maximum Error            | `np.max()`              |
-|   5 | Calculate R²                  | `np.sum()`, `np.mean()` |
-|   6 | Perform Min-Max Normalisation | `min()`, `max()`        |
-|   7 | Perform Standardisation       | Mean + Std              |
-|   8 | Create Sigmoid Function       | `np.exp()`              |
-|   9 | Create ReLU Function          | `np.maximum()`          |
-|  10 | Create MAE/MSE/RMSE Functions | Custom functions        |
-|  11 | Calculate Accuracy            | Boolean arrays          |
-|  12 | Convert Probability to Class  | `np.where()`            |
-
-
+| No. | Task | Data |
+| --: | --- | --- |
+| 1 | MAE | `actual=[50,60,70,80,90]`, `predicted=[55,58,72,75,95]` |
+| 2 | MSE | same arrays as Q1 |
+| 3 | RMSE | `actual=[100,120,150,180]`, `predicted=[110,115,145,170]` |
+| 4 | Maximum error | `actual=[100,200,300,400]`, `predicted=[105,180,330,390]` |
+| 5 | R² | `actual=[10,20,30,40,50]`, `predicted=[12,18,29,43,48]` |
+| 6 | Min-max normalisation | `[25,40,60,80,100]` |
+| 7 | Standardisation, then check mean ≈ 0 | `[20,25,30,35,40]` |
+| 8 | `sigmoid()` function | `[-5,-2,0,2,5]` |
+| 9 | `relu()` function | `[-10,-5,2,7,-3,8]` |
+| 10 | Write `mae`, `mse`, `rmse` functions and test all three on one pair of arrays | your own arrays |
+| 11 | Classification accuracy | `actual=[1,1,0,1,0,0,1,0]`, `predicted=[1,0,0,1,1,0,1,1]` |
+| 12 | Probabilities to classes (threshold 0.5) | `[0.1,0.8,0.45,0.72,0.3,0.95]` |

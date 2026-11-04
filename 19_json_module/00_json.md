@@ -343,16 +343,3 @@ Here are the main ones you should remember:
 | True | true |
 | False | false |
 | None | null |
-
-## Summary
-
-The `json` module helps us work with structured data in a standard format.
-
-It is used when:
-
-- saving application data
-- reading API responses
-- storing settings
-- exchanging data between systems
-
-It is one of the most important modules in Python because JSON is used everywhere on the web and in software applications.
